@@ -5,20 +5,134 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Time Tracker" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Window.Icon>
+        <DrawingImage>
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="LightBlue">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="8,8" RadiusX="8" RadiusY="8"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="DarkBlue">
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry>
+                                <PathFigure StartPoint="8,8">
+                                    <LineSegment Point="8,3"/>
+                                    <LineSegment Point="12,8"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="DarkBlue" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </Window.Icon>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button x:Name="NewActivityButton" Grid.Row="0" Content="Nuovo" Height="40" Width="120" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center" Click="NewActivityButton_Click" />
+        <Button x:Name="NewActivityButton" Grid.Row="0" Height="40" Width="120" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center" Click="NewActivityButton_Click">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="+" FontSize="18" FontWeight="Bold" Foreground="Green" Margin="0,0,5,0" />
+                <TextBlock Text="Nuovo" FontSize="12" VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
         <DataGrid x:Name="ActivitiesDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nome" Binding="{Binding Name}" Width="2*" />
                 <DataGridTextColumn Header="Inizio" Binding="{Binding StartTime}" Width="*" />
                 <DataGridTextColumn Header="Fine" Binding="{Binding EndTime}" Width="*" />
                 <DataGridTextColumn Header="Durata (min)" Binding="{Binding DurationMinutes}" Width="*" />
+                <DataGridTemplateColumn Header="Azioni" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <!-- Timer Button -->
+                                <Button Width="30" Height="25" Margin="2" 
+                                        Click="TimerButton_Click" 
+                                        Tag="{Binding}"
+                                        ToolTip="Avvia Timer"
+                                        Content="▶"
+                                        FontSize="14"
+                                        Foreground="Green">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Content" Value="▶ Timer" />
+                                                    <Setter Property="Width" Value="70" />
+                                                    <Setter Property="FontSize" Value="10" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                
+                                <!-- Edit Button -->
+                                <Button Width="30" Height="25" Margin="2" 
+                                        Click="EditActivityButton_Click" 
+                                        Tag="{Binding}"
+                                        ToolTip="Modifica Attività"
+                                        Content="✎"
+                                        FontSize="14"
+                                        Foreground="Blue">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Content" Value="✎ Modifica" />
+                                                    <Setter Property="Width" Value="80" />
+                                                    <Setter Property="FontSize" Value="10" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                
+                                <!-- Delete Button -->
+                                <Button Width="30" Height="25" Margin="2" 
+                                        Click="DeleteActivityButton_Click" 
+                                        Tag="{Binding}" 
+                                        ToolTip="Elimina Attività"
+                                        Content="✖"
+                                        FontSize="14"
+                                        Foreground="DarkRed"
+                                        Background="LightCoral">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="LightCoral" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Content" Value="✖ Elimina" />
+                                                    <Setter Property="Width" Value="75" />
+                                                    <Setter Property="FontSize" Value="10" />
+                                                    <Setter Property="Background" Value="IndianRed" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        
+        <!-- Numero di versione in basso a destra -->
+        <TextBlock Grid.Row="1" x:Name="VersionTextBlock" Text="v1.0.0" 
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom" 
+                   Margin="0,0,15,15" 
+                   FontSize="10" 
+                   Foreground="Gray" 
+                   Opacity="0.7" />
     </Grid>
 </Window>

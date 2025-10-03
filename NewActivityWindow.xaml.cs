@@ -12,23 +12,25 @@ namespace TimeTracker
             InitializeComponent();
         }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(NameTextBox.Text))
             {
-                MessageBox.Show("Inserisci il nome dell'attività.");
+                MessageBox.Show("Inserisci il nome dell'attività.", "Errore", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            
             if (!int.TryParse(DurationTextBox.Text, out int duration) || duration <= 0)
             {
-                MessageBox.Show("Inserisci una durata valida.");
+                MessageBox.Show("Inserisci una durata valida.", "Errore", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            
             CreatedActivity = new Activity
             {
                 Name = NameTextBox.Text,
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now.AddMinutes(duration),
+                StartTime = null,
+                EndTime = null,
                 DurationMinutes = duration
             };
             DialogResult = true;

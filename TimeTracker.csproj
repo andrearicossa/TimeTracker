@@ -6,10 +6,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Product>Time Tracker</Product>
+    <Company>TimeTracker Development</Company>
+    <Copyright>© 2025 TimeTracker Development</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Windows.Forms" Version="4.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
